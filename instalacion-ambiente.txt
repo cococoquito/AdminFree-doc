@@ -1,0 +1,157 @@
+1) INSTALACION DE NOTEPAD++
+	snap install notepad-plus-plus
+	sudo snap connect notepad-plus-plus:process-control
+	sudo snap connect notepad-plus-plus:removable-media
+	sudo snap connect notepad-plus-plus:hardware-observe
+	sudo snap connect notepad-plus-plus:cups-control
+Finally find it on activities and add it on favorite
+source:
+http://ubuntuhandbook.org/index.php/2018/04/install-notepad-in-ubuntu-18-0416-04-via-snap/
+
+
+2) INSTALACION DE SDKMAN
+	a) instalar CURL
+		sudo apt-get update && sudo apt-get install curl
+		
+	b) instalar SDKMAN
+		curl -s "https://get.sdkman.io" | bash
+		source "$HOME/.sdkman/bin/sdkman-init.sh"
+		
+	c) verificar la version de SDKMAN
+		sdk version
+		
+	
+3) INSTALACION DE JDK 9.0.4
+	a) para ver las versiones de java en SDKMAN
+		sdk list java
+		
+	b) sdk install java 9.0.4-open
+	
+	c) verificar el JDK instalado 
+	    sdk list java 'ayuda a ver que jdk esta instaldo y esta en usu'
+		java -version
+		
+	d) la carpeta de JDK queda en HOME >> .sdkman >> candidates  
+	
+	
+4) INSTALACION JDK 11 (ESTE ES EL QUE SE VA UTILIZAR)
+    a) instalar JDK 11
+		sudo apt install openjdk-11-jdk
+	
+	b) verificar java 
+		java -version
+		
+	c) verificar java home
+		echo $JAVA_HOME
+	
+	
+5) INSTALACION DE SPRING TOOL SUITE
+
+	a) descargar y descomprimir "spring-tool-suite-3.9.6.RELEASE-e4.9.0-linux-gtk-x86_64.tar.gz" (esta en el drive)
+	
+	b) Movemos el directorio "sts-bundle" descargado a opt
+		sudo mv sts-bundle /opt
+		
+	c) Creamos el lanzador
+		sudo ln -s /opt/sts-bundle/sts-3.9.6.RELEASE/STS /usr/local/bin/sts
+		
+	d) Por último pasaremos a crear un Launcher para la interfaz de usuario Unity con el que cuenta 
+		sudo gedit /usr/share/applications/springLauncher.desktop
+		
+	e) Copiamos en el archivo springLauncher.desktop
+		[Desktop Entry]
+		Name=Spring Tool Suite
+		Comment=Spring Tool Suite 3.9.6
+		Exec=/opt/sts-bundle/sts-3.9.6.RELEASE/STS
+		Icon=/opt/sts-bundle/sts-3.9.6.RELEASE/icon.xpm
+		StartupNotify=true
+		Terminal=false
+		Type=Application
+		Categories=Development;IDE;Java;
+	
+	f) vamos a la pestaña activities y buscamos "spring" y lo agregamos a favorito
+	
+		
+6) INSTALACION DE VISUAL STUDIO CODE
+	a) ir a la pagina micros para descargar visual code
+		https://code.visualstudio.com/Download
+		
+	b) descargar para linux .deb de 64 bit
+	
+	c) en la carpeta donde descargo el .deb ejecutar los siguientes comandos
+		sudo apt-get install -f
+		sudo dpkg -i code_1.27.2-1536736588_amd64.deb
+	
+	d) vamos a la pestaña activities y buscamos "visual code" y lo agregamos a favorito
+	
+	e) instalar las extension que desee yo tengo 37 wuao
+	
+
+7) INSTALACION DE GIT Y CONFIGURACION EN SPRING TOOL SUITE
+	a) para instalar en linux en linea de comandos ejecutar la siguiente comandos
+		sudo apt install git
+
+	b) Credenciales de GIT-HUB
+		https://github.com/
+		cococoquito
+		Shapecrazy$123
+		
+	c) si sale "Please tell me who you are" Run
+		git config --global user.email "you@example.com"
+		git config --global user.name "Your Name"
+
+	d) crear un workspace llamada "workspace-consecutivos" en documents y abrirlo con STS
+		
+	e) en STS en GIT hacer git-clone al respositorio backend-consecutivos a la rama backend-init 
+		https://github.com/cococoquito/backend-consecutivos.git
+		con esto ya se puede dar commit, push, ver historial desde STS
+		
+	
+8) INSTALACION Y CONFIGURACION DE MYSQL Server version: 5.7.23
+	a) instalar mysql server in ubutun
+		sudo apt-get install mysql-server
+	
+	b) security installation
+		sudo mysql_secure_installation
+	     questionss
+		  - n
+		  - type in the mysql root password you want to use
+		  - y
+		  - y
+		  - y
+		  - y
+	
+	c) para ingresar a la consola como mysql 	
+		sudo mysql -u root -p
+		
+	d) te pide la contraseña del usuario de ubutun y la del ROOT de mysql
+	
+	e) consultar las base de datos
+		show databases; 
+		debe salir 4 base de datos para que la configuracion quede OK
+	
+	f) instalar workbench para ubutun
+		descargar: (aunque este binario esta en el drive)
+		https://dev.mysql.com/downloads/workbench/
+		seleccionar el sistema operativo correspondiente
+		al archivo descargado se da doble click y seguir el asistente
+		
+9) AL CONECTARSE LOCALMENTE CON WORKBENCH SALE UN ERROR DE CONEXION PARA SOLUCIONARLO SE DEBE HACER LO SIGUIENTE
+		a) en consola conectarse a mysql
+			sudo mysql -u root -p
+				-clave ubutun
+				-clave de mysql server cuando se instalo
+				
+		b)  utilizar la bd de mysql
+				use mysql;
+		
+		c) Actualizar el usuario con el siguiente sentencia
+			update user set plugin='mysql_native_password' where user='root';
+			update mysql.user set authentication_string=PASSWORD('rootpasswordgiven') where user='root';
+			FLUSH PRIVILEGES;
+			quit
+			
+		d) Ingresar de nuevo al workbrench y para el password de la conexion local es 'rootpasswordgiven' 
+			OK
+		
+		
