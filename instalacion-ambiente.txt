@@ -136,6 +136,7 @@ http://ubuntuhandbook.org/index.php/2018/04/install-notepad-in-ubuntu-18-0416-04
 		seleccionar el sistema operativo correspondiente
 		al archivo descargado se da doble click y seguir el asistente
 		
+		
 9) AL CONECTARSE LOCALMENTE CON WORKBENCH SALE UN ERROR DE CONEXION PARA SOLUCIONARLO SE DEBE HACER LO SIGUIENTE
 		a) en consola conectarse a mysql
 			sudo mysql -u root -p
@@ -153,5 +154,11 @@ http://ubuntuhandbook.org/index.php/2018/04/install-notepad-in-ubuntu-18-0416-04
 			
 		d) Ingresar de nuevo al workbrench y para el password de la conexion local es 'rootpasswordgiven' 
 			OK
+			
 		
-		
+10) DESCOMPRESOR PARA ARCHIVOS EN WINRAR
+	a) para descomprimir archivos en winrar se debe instalar el siguiente paquete
+		sudo apt install unrar
+
+
+
