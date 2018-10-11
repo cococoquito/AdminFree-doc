@@ -136,6 +136,10 @@ http://ubuntuhandbook.org/index.php/2018/04/install-notepad-in-ubuntu-18-0416-04
 		seleccionar el sistema operativo correspondiente
 		al archivo descargado se da doble click y seguir el asistente
 		
+	g) para las conexiones activas de mysql
+		sudo mysql -u root -p
+		show status like 'Threads%';
+		
 		
 9) AL CONECTARSE LOCALMENTE CON WORKBENCH SALE UN ERROR DE CONEXION PARA SOLUCIONARLO SE DEBE HACER LO SIGUIENTE
 		a) en consola conectarse a mysql
