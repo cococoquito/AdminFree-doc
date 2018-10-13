@@ -163,6 +163,10 @@ http://ubuntuhandbook.org/index.php/2018/04/install-notepad-in-ubuntu-18-0416-04
 10) DESCOMPRESOR PARA ARCHIVOS EN WINRAR
 	a) para descomprimir archivos en winrar se debe instalar el siguiente paquete
 		sudo apt install unrar
-
-
-
+		
+11) INSTALACION DE POSTMAN UBUTUN 18.0.4
+		a) ejecutar el siguiente comando en el terminal
+			sudo snap install postman
+			
+		b) vamos a la pestaña activities y buscamos "POSTMAN" y lo agregamos a favorito
+		
