@@ -170,3 +170,13 @@ http://ubuntuhandbook.org/index.php/2018/04/install-notepad-in-ubuntu-18-0416-04
 			
 		b) vamos a la pestaña activities y buscamos "POSTMAN" y lo agregamos a favorito
 		
+12) INSTALACION DE  node.js 
+		a) sudo apt update
+		
+		b) sudo apt install nodejs
+
+		c) sudo apt install npm
+		
+		d) revisar la version de node.js
+			nodejs -v
+		
