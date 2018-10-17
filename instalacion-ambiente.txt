@@ -171,12 +171,19 @@ http://ubuntuhandbook.org/index.php/2018/04/install-notepad-in-ubuntu-18-0416-04
 		b) vamos a la pestaña activities y buscamos "POSTMAN" y lo agregamos a favorito
 		
 12) INSTALACION DE  node.js 
-		a) sudo apt update
+		a) se debe actualizar los repositorios para instalar la ultima version de node y npm
+			sudo apt install curl
+			curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
 		
 		b) sudo apt install nodejs
 
 		c) sudo apt install npm
 		
-		d) revisar la version de node.js
+		d) revisar la version de node.js debe ser mayor a 8.9 y el npm debe ser mayor a 5.5
 			nodejs -v
+			npm -v
+			
+13) INSTALACION DE ANGULAR CLI
+			sudo npm install -g @angular/cli
+			ng -v
 		
