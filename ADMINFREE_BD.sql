@@ -33,7 +33,7 @@ DELIMITER //
 		/*Fin de transaccion */ 
 		COMMIT; 
 		
-		/*Mandamos 200 si todo salio bien*/ 
-		SET RESPUESTA = '200';
+		/*Mandamos OK si todo salio bien*/ 
+		SET RESPUESTA = 'OK';
 	END //
 DELIMITER ;
