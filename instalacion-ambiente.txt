@@ -183,6 +183,9 @@ http://ubuntuhandbook.org/index.php/2018/04/install-notepad-in-ubuntu-18-0416-04
 			nodejs -v
 			npm -v
 			
+		e) instalar el paquete de rxjs, angular 6 se pierde ese paquete
+			npm i rxjs-compat
+			
 13) INSTALACION DE ANGULAR CLI
 			sudo npm install -g @angular/cli
 			ng -v
