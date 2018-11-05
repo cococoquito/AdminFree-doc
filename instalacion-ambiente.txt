@@ -7,7 +7,8 @@
 Finally find it on activities and add it on favorite
 source:
 http://ubuntuhandbook.org/index.php/2018/04/install-notepad-in-ubuntu-18-0416-04-via-snap/
-
+NOTA: CUANDO NOTAPAD NO QUIERE ABRIR, SE DEBE ABRIRLO CON EL SIGUEIENTE COMANDO "notepad-plus-plus"
+Y SEGUIR LAS INDICACIONES QUE DICE EN LA CONSOLA
 
 2) INSTALACION DE SDKMAN
 	a) instalar CURL
