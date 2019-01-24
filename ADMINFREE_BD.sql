@@ -161,7 +161,6 @@ INSERT INTO ADMINFREE.RESTRICCIONES (ID_RESTRICCION, DESCRIPCION) VALUES (1, 'El
 INSERT INTO ADMINFREE.RESTRICCIONES (ID_RESTRICCION, DESCRIPCION) VALUES (2, 'El valor del campo debe ser solo números' );
 INSERT INTO ADMINFREE.RESTRICCIONES (ID_RESTRICCION, DESCRIPCION) VALUES (3, 'El valor del campo debe ser único solamente para la nomenclatura asociada al campo');
 INSERT INTO ADMINFREE.RESTRICCIONES (ID_RESTRICCION, DESCRIPCION) VALUES (4, 'El valor del campo debe ser único para todas las nomenclaturas asociadas al campo');
-
 INSERT INTO ADMINFREE.RESTRICCIONES (ID_RESTRICCION, DESCRIPCION) VALUES (5, 'El valor por defecto de la fecha será la fecha actual y el usuario NO podrá modificar este valor');
 INSERT INTO ADMINFREE.RESTRICCIONES (ID_RESTRICCION, DESCRIPCION) VALUES (6, 'El valor por defecto de la fecha será la fecha actual y el usuario SI podrá modificar este valor');
 INSERT INTO ADMINFREE.RESTRICCIONES (ID_RESTRICCION, DESCRIPCION) VALUES (7, 'El valor de la fecha debe ser mayor que la fecha actual');
