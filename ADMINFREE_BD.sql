@@ -116,7 +116,65 @@ CREATE TABLE ADMINFREE.NOMENCLATURAS_SECUENCIA (
 
 /*
  *****************CREACION DE PROCEDIMIENTOS ALMACENADOS****************************
- */ 
+ */
+DELIMITER //
+ 	CREATE PROCEDURE ADMINFREE.PR_CREAR_CLIENTE(
+		IN P_TOKEN 			VARCHAR(255),
+		IN P_NOMBRE 		VARCHAR(255),
+		IN P_TELEFONOS 	VARCHAR(255),
+		IN P_EMAILS 			VARCHAR(255),
+		IN P_USUARIO 		VARCHAR(255),
+		OUT RESPUESTA 	VARCHAR(700))
+	BEGIN
+		DECLARE V_ID_CLIENTE TINYINT;
+
+		/*Manejo de errores*/
+		DECLARE EXIT HANDLER FOR SQLEXCEPTION
+		BEGIN
+			ROLLBACK;
+			GET STACKED DIAGNOSTICS CONDITION 1 RESPUESTA = MESSAGE_TEXT;
+		END;
+
+		/*Inicia transaccion*/
+		START TRANSACTION;
+
+		/*se hace la inserccion del cliente*/
+		INSERT INTO CLIENTES (TOKEN, NOMBRE, TELEFONOS, EMAILS, ESTADO, FECHA_ACTIVACION, USUARIO)
+		VALUES (P_TOKEN, P_NOMBRE, P_TELEFONOS, P_EMAILS, 1, CURDATE(), P_USUARIO);
+
+		/*se obtiene el id del cliente*/
+		SELECT ID_CLIENTE  INTO V_ID_CLIENTE FROM CLIENTES WHERE TOKEN = P_TOKEN;
+
+		/*creacion de la tabla consecutivos*/
+		SET @tbl_conse = CONCAT('CREATE TABLE IF NOT EXISTS ', CONCAT('CONSECUTIVOS_',V_ID_CLIENTE) ,'(');
+		SET @tbl_conse = CONCAT(@tbl_conse,'ID_CONSECUTIVO BIGINT NOT NULL AUTO_INCREMENT,');
+		SET @tbl_conse = CONCAT(@tbl_conse,'NOMENCLATURA INTEGER NOT NULL,');
+		SET @tbl_conse = CONCAT(@tbl_conse,'CONSECUTIVO VARCHAR(10) NOT NULL,');
+		SET @tbl_conse = CONCAT(@tbl_conse,'USUARIO INTEGER NOT NULL,');
+		SET @tbl_conse = CONCAT(@tbl_conse,'FECHA_SOLICITUD DATE NOT NULL,');
+		SET @tbl_conse = CONCAT(@tbl_conse,'ESTADO TINYINT NOT NULL,');
+		SET @tbl_conse = CONCAT(@tbl_conse,'PRIMARY KEY (ID_CONSECUTIVO))');
+		PREPARE pre_tbl_conse FROM @tbl_conse;
+		EXECUTE pre_tbl_conse;
+
+		/*creacion de la tabla consecutivos values*/
+		SET @tbl_values = CONCAT('CREATE TABLE IF NOT EXISTS ', CONCAT('CONSECUTIVOS_VALUES_',V_ID_CLIENTE) ,'(');
+		SET @tbl_values = CONCAT(@tbl_values,'ID_VALUE BIGINT NOT NULL AUTO_INCREMENT,');
+		SET @tbl_values = CONCAT(@tbl_values,'ID_CONSECUTIVO BIGINT NOT NULL,');
+		SET @tbl_values = CONCAT(@tbl_values,'CAMPO INTEGER NOT NULL,');
+		SET @tbl_values = CONCAT(@tbl_values,'VALOR VARCHAR(1000) NOT NULL,');
+		SET @tbl_values = CONCAT(@tbl_values,'PRIMARY KEY (ID_VALUE))');
+		PREPARE pre_tbl_values FROM @tbl_values;
+		EXECUTE pre_tbl_values;
+
+		/*Fin de transaccion */
+		COMMIT;
+
+		/*Mandamos OK si todo salio bien*/
+		SET RESPUESTA = 'OK';
+	END //
+DELIMITER;
+
 DELIMITER //
 	CREATE PROCEDURE ADMINFREE.PR_ELIMINAR_CLIENTE(IN ID TINYINT,  OUT RESPUESTA VARCHAR(700))
 	BEGIN
@@ -127,10 +185,10 @@ DELIMITER //
 			ROLLBACK;
 			GET STACKED DIAGNOSTICS CONDITION 1 RESPUESTA = MESSAGE_TEXT;
 		END;
-		
+
 		/*Inicia transaccion*/ 
-		START TRANSACTION; 
-		
+		START TRANSACTION;
+
 			/*Se elimina las restricciones asociados a los campos del cliente*/
 			DELETE FROM ADMINFREE.CAMPOS_ENTRADA_RESTRICCIONES WHERE CAMPO IN(SELECT CE.ID_CAMPO FROM CAMPOS_ENTRADA CE WHERE CE.CLIENTE = ID);
 
@@ -139,28 +197,38 @@ DELIMITER //
 
 			/*Se elimina los campos asociados a las nomenclaturas del cliente*/
 			DELETE FROM ADMINFREE.NOMENCLATURAS_CAMPOS_ENTRADA WHERE CAMPO IN(SELECT CE.ID_CAMPO FROM CAMPOS_ENTRADA CE WHERE CE.CLIENTE = ID);
-			
+
 			/*Se elimina los campos asociados al cliente*/
 			DELETE FROM ADMINFREE.CAMPOS_ENTRADA WHERE CLIENTE = ID;
-			
+
 			/*Se elimina las secuencias de las nomenclaturas del cliente*/
 			DELETE FROM ADMINFREE.NOMENCLATURAS_SECUENCIA WHERE NOMENCLATURA IN(SELECT NOM.ID_NOMENCLATURA FROM NOMENCLATURAS NOM WHERE NOM.CLIENTE = ID);
-			
+
 			/*Se elimina las nomenclaturas*/
 			DELETE FROM ADMINFREE.NOMENCLATURAS WHERE CLIENTE = ID;
 
 			/*Se elimina los modulos relacionados a todos los usuarios relacionados al cliente*/ 
 			DELETE FROM ADMINFREE.USUARIOS_MODULOS WHERE ID_USUARIO IN (SELECT ID_USUARIO FROM ADMINFREE.USUARIOS WHERE CLIENTE = ID);
-			
+
 			/*Se elimina todos los usuarios relacionados al cliente*/ 
 			DELETE FROM ADMINFREE.USUARIOS WHERE CLIENTE = ID;
-		
+
 			/*Se elimina el cliente*/ 
-			DELETE FROM ADMINFREE.CLIENTES WHERE ID_CLIENTE = ID;	
-		
+			DELETE FROM ADMINFREE.CLIENTES WHERE ID_CLIENTE = ID;
+
+			/*eliminacion de la tabla consecutivos*/
+			SET @tbl_conse = CONCAT('DROP TABLE ', CONCAT('CONSECUTIVOS_',ID));
+			PREPARE pre_tbl_conse FROM @tbl_conse;
+			EXECUTE pre_tbl_conse;
+
+			/*eliminacion de la tabla consecutivos values*/
+			SET @tbl_values = CONCAT('DROP TABLE ', CONCAT('CONSECUTIVOS_VALUES_',ID));
+			PREPARE pre_tbl_values FROM @tbl_values;
+			EXECUTE pre_tbl_values;
+
 		/*Fin de transaccion */ 
 		COMMIT; 
-		
+
 		/*Mandamos OK si todo salio bien*/ 
 		SET RESPUESTA = 'OK';
 	END //
