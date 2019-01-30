@@ -131,6 +131,24 @@ DELIMITER //
 		/*Inicia transaccion*/ 
 		START TRANSACTION; 
 		
+			/*Se elimina las restricciones asociados a los campos del cliente*/
+			DELETE FROM ADMINFREE.CAMPOS_ENTRADA_RESTRICCIONES WHERE CAMPO IN(SELECT CE.ID_CAMPO FROM CAMPOS_ENTRADA CE WHERE CE.CLIENTE = ID);
+
+			/*Se elimina los items de los campos asociados al cliente*/
+			DELETE FROM ADMINFREE.SELECT_ITEMS WHERE CAMPO IN(SELECT CE.ID_CAMPO FROM CAMPOS_ENTRADA CE WHERE CE.CLIENTE = ID);
+
+			/*Se elimina los campos asociados a las nomenclaturas del cliente*/
+			DELETE FROM ADMINFREE.NOMENCLATURAS_CAMPOS_ENTRADA WHERE CAMPO IN(SELECT CE.ID_CAMPO FROM CAMPOS_ENTRADA CE WHERE CE.CLIENTE = ID);
+			
+			/*Se elimina los campos asociados al cliente*/
+			DELETE FROM ADMINFREE.CAMPOS_ENTRADA WHERE CLIENTE = ID;
+			
+			/*Se elimina las secuencias de las nomenclaturas del cliente*/
+			DELETE FROM ADMINFREE.NOMENCLATURAS_SECUENCIA WHERE NOMENCLATURA IN(SELECT NOM.ID_NOMENCLATURA FROM NOMENCLATURAS NOM WHERE NOM.CLIENTE = ID);
+			
+			/*Se elimina las nomenclaturas*/
+			DELETE FROM ADMINFREE.NOMENCLATURAS WHERE CLIENTE = ID;
+
 			/*Se elimina los modulos relacionados a todos los usuarios relacionados al cliente*/ 
 			DELETE FROM ADMINFREE.USUARIOS_MODULOS WHERE ID_USUARIO IN (SELECT ID_USUARIO FROM ADMINFREE.USUARIOS WHERE CLIENTE = ID);
 			
@@ -138,7 +156,7 @@ DELIMITER //
 			DELETE FROM ADMINFREE.USUARIOS WHERE CLIENTE = ID;
 		
 			/*Se elimina el cliente*/ 
-			DELETE FROM ADMINFREE.CLIENTES WHERE ID_CLIENTE = ID;		
+			DELETE FROM ADMINFREE.CLIENTES WHERE ID_CLIENTE = ID;	
 		
 		/*Fin de transaccion */ 
 		COMMIT; 
