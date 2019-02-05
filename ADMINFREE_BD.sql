@@ -163,7 +163,7 @@ DELIMITER //
 		SET @tbl_values = CONCAT(@tbl_values,'ID_VALUE BIGINT NOT NULL AUTO_INCREMENT,');
 		SET @tbl_values = CONCAT(@tbl_values,'ID_CONSECUTIVO BIGINT NOT NULL,');
 		SET @tbl_values = CONCAT(@tbl_values,'CAMPO INTEGER NOT NULL,');
-		SET @tbl_values = CONCAT(@tbl_values,'VALOR VARCHAR(1000) NOT NULL,');
+		SET @tbl_values = CONCAT(@tbl_values,'VALOR VARCHAR(1000),');
 		SET @tbl_values = CONCAT(@tbl_values,'PRIMARY KEY (ID_VALUE))');
 		PREPARE pre_tbl_values FROM @tbl_values;
 		EXECUTE pre_tbl_values;
