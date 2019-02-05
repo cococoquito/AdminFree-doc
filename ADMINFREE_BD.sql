@@ -151,7 +151,7 @@ DELIMITER //
 		SET @tbl_conse = CONCAT(@tbl_conse,'ID_CONSECUTIVO BIGINT NOT NULL AUTO_INCREMENT,');
 		SET @tbl_conse = CONCAT(@tbl_conse,'NOMENCLATURA INTEGER NOT NULL,');
 		SET @tbl_conse = CONCAT(@tbl_conse,'CONSECUTIVO VARCHAR(10) NOT NULL,');
-		SET @tbl_conse = CONCAT(@tbl_conse,'USUARIO INTEGER NOT NULL,');
+		SET @tbl_conse = CONCAT(@tbl_conse,'USUARIO INTEGER,');
 		SET @tbl_conse = CONCAT(@tbl_conse,'FECHA_SOLICITUD DATE NOT NULL,');
 		SET @tbl_conse = CONCAT(@tbl_conse,'ESTADO TINYINT NOT NULL,');
 		SET @tbl_conse = CONCAT(@tbl_conse,'PRIMARY KEY (ID_CONSECUTIVO))');
