@@ -154,7 +154,9 @@ DELIMITER //
 		SET @tbl_conse = CONCAT(@tbl_conse,'USUARIO INTEGER,');
 		SET @tbl_conse = CONCAT(@tbl_conse,'FECHA_SOLICITUD DATE NOT NULL,');
 		SET @tbl_conse = CONCAT(@tbl_conse,'ESTADO TINYINT NOT NULL,');
-		SET @tbl_conse = CONCAT(@tbl_conse,'PRIMARY KEY (ID_CONSECUTIVO))');
+		SET @tbl_conse = CONCAT(@tbl_conse,'PRIMARY KEY (ID_CONSECUTIVO),');
+		SET @tbl_conse = CONCAT(@tbl_conse,'FOREIGN KEY (NOMENCLATURA) REFERENCES ADMINFREE.NOMENCLATURAS(ID_NOMENCLATURA),');
+		SET @tbl_conse = CONCAT(@tbl_conse,'FOREIGN KEY (USUARIO) REFERENCES ADMINFREE.USUARIOS(ID_USUARIO))');
 		PREPARE pre_tbl_conse FROM @tbl_conse;
 		EXECUTE pre_tbl_conse;
 
@@ -164,7 +166,9 @@ DELIMITER //
 		SET @tbl_values = CONCAT(@tbl_values,'ID_CONSECUTIVO BIGINT NOT NULL,');
 		SET @tbl_values = CONCAT(@tbl_values,'ID_NOME_CAMPO INTEGER NOT NULL,');
 		SET @tbl_values = CONCAT(@tbl_values,'VALOR VARCHAR(1000),');
-		SET @tbl_values = CONCAT(@tbl_values,'PRIMARY KEY (ID_VALUE))');
+		SET @tbl_values = CONCAT(@tbl_values,'PRIMARY KEY (ID_VALUE),');
+		SET @tbl_values = CONCAT(@tbl_values,'FOREIGN KEY (ID_CONSECUTIVO) REFERENCES ADMINFREE.', CONCAT('CONSECUTIVOS_',V_ID_CLIENTE,'(ID_CONSECUTIVO),'));
+		SET @tbl_values = CONCAT(@tbl_values,'FOREIGN KEY (ID_NOME_CAMPO) REFERENCES ADMINFREE.NOMENCLATURAS_CAMPOS_ENTRADA(ID_NOME_CAMPO))');
 		PREPARE pre_tbl_values FROM @tbl_values;
 		EXECUTE pre_tbl_values;
 
