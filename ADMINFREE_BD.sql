@@ -197,6 +197,16 @@ DELIMITER //
 		/*Inicia transaccion*/ 
 		START TRANSACTION;
 
+			/*eliminacion de la tabla consecutivos values*/
+			SET @tbl_values = CONCAT('DROP TABLE ', CONCAT('CONSECUTIVOS_VALUES_',ID));
+			PREPARE pre_tbl_values FROM @tbl_values;
+			EXECUTE pre_tbl_values;
+
+			/*eliminacion de la tabla consecutivos*/
+			SET @tbl_conse = CONCAT('DROP TABLE ', CONCAT('CONSECUTIVOS_',ID));
+			PREPARE pre_tbl_conse FROM @tbl_conse;
+			EXECUTE pre_tbl_conse;
+
 			/*Se elimina las restricciones asociados a los campos del cliente*/
 			DELETE FROM ADMINFREE.CAMPOS_ENTRADA_RESTRICCIONES WHERE CAMPO IN(SELECT CE.ID_CAMPO FROM CAMPOS_ENTRADA CE WHERE CE.CLIENTE = ID);
 
@@ -223,16 +233,6 @@ DELIMITER //
 
 			/*Se elimina el cliente*/ 
 			DELETE FROM ADMINFREE.CLIENTES WHERE ID_CLIENTE = ID;
-
-			/*eliminacion de la tabla consecutivos*/
-			SET @tbl_conse = CONCAT('DROP TABLE ', CONCAT('CONSECUTIVOS_',ID));
-			PREPARE pre_tbl_conse FROM @tbl_conse;
-			EXECUTE pre_tbl_conse;
-
-			/*eliminacion de la tabla consecutivos values*/
-			SET @tbl_values = CONCAT('DROP TABLE ', CONCAT('CONSECUTIVOS_VALUES_',ID));
-			PREPARE pre_tbl_values FROM @tbl_values;
-			EXECUTE pre_tbl_values;
 
 		/*Fin de transaccion */ 
 		COMMIT; 
