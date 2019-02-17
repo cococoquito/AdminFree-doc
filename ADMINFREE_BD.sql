@@ -175,6 +175,17 @@ DELIMITER //
 		PREPARE pre_tbl_values FROM @tbl_values;
 		EXECUTE pre_tbl_values;
 
+		/*creacion de la tabla consecutivos documentos*/
+		SET @tbl_docs = CONCAT('CREATE TABLE IF NOT EXISTS ', CONCAT('CONSECUTIVOS_DOCUMENTOS_',V_ID_CLIENTE) ,'(');
+		SET @tbl_docs = CONCAT(@tbl_docs,'ID_DOC BIGINT NOT NULL AUTO_INCREMENT,');
+		SET @tbl_docs = CONCAT(@tbl_docs,'ID_CONSECUTIVO BIGINT NOT NULL,');
+		SET @tbl_docs = CONCAT(@tbl_docs,'NOMBRE_DOCUMENTO VARCHAR(255) NOT NULL,');
+		SET @tbl_docs = CONCAT(@tbl_docs,'TIPO_DOCUMENTO VARCHAR(100) NOT NULL,');
+		SET @tbl_docs = CONCAT(@tbl_docs,'PRIMARY KEY (ID_DOC),');
+		SET @tbl_docs = CONCAT(@tbl_docs,'FOREIGN KEY (ID_CONSECUTIVO) REFERENCES ADMINFREE.', CONCAT('CONSECUTIVOS_',V_ID_CLIENTE,'(ID_CONSECUTIVO))'));
+		PREPARE pre_tbl_docs FROM @tbl_docs;
+		EXECUTE pre_tbl_docs;
+
 		/*Fin de transaccion */
 		COMMIT;
 
@@ -196,6 +207,11 @@ DELIMITER //
 
 		/*Inicia transaccion*/ 
 		START TRANSACTION;
+
+			/*eliminacion de la tabla consecutivos documentos*/
+			SET @tbl_docs = CONCAT('DROP TABLE ', CONCAT('CONSECUTIVOS_DOCUMENTOS_',ID));
+			PREPARE pre_tbl_docs FROM @tbl_docs;
+			EXECUTE pre_tbl_docs;
 
 			/*eliminacion de la tabla consecutivos values*/
 			SET @tbl_values = CONCAT('DROP TABLE ', CONCAT('CONSECUTIVOS_VALUES_',ID));
