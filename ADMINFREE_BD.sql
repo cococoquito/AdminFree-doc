@@ -181,6 +181,8 @@ DELIMITER //
 		SET @tbl_docs = CONCAT(@tbl_docs,'ID_CONSECUTIVO BIGINT NOT NULL,');
 		SET @tbl_docs = CONCAT(@tbl_docs,'NOMBRE_DOCUMENTO VARCHAR(255) NOT NULL,');
 		SET @tbl_docs = CONCAT(@tbl_docs,'TIPO_DOCUMENTO VARCHAR(100) NOT NULL,');
+		SET @tbl_docs = CONCAT(@tbl_docs,'SIZE_DOCUMENTO VARCHAR(50) NOT NULL,');
+		SET @tbl_docs = CONCAT(@tbl_docs,'FECHA_CARGUE DATE NOT NULL,');
 		SET @tbl_docs = CONCAT(@tbl_docs,'PRIMARY KEY (ID_DOC),');
 		SET @tbl_docs = CONCAT(@tbl_docs,'FOREIGN KEY (ID_CONSECUTIVO) REFERENCES ADMINFREE.', CONCAT('CONSECUTIVOS_',V_ID_CLIENTE,'(ID_CONSECUTIVO))'));
 		PREPARE pre_tbl_docs FROM @tbl_docs;
