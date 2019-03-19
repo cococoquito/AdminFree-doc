@@ -156,6 +156,7 @@ DELIMITER //
 		SET @tbl_conse = CONCAT(@tbl_conse,'CONSECUTIVO VARCHAR(10) NOT NULL,');
 		SET @tbl_conse = CONCAT(@tbl_conse,'USUARIO INTEGER,');
 		SET @tbl_conse = CONCAT(@tbl_conse,'FECHA_SOLICITUD DATE NOT NULL,');
+		SET @tbl_conse = CONCAT(@tbl_conse,'FECHA_ANULACION DATE,');
 		SET @tbl_conse = CONCAT(@tbl_conse,'ESTADO TINYINT NOT NULL,');
 		SET @tbl_conse = CONCAT(@tbl_conse,'PRIMARY KEY (ID_CONSECUTIVO),');
 		SET @tbl_conse = CONCAT(@tbl_conse,'FOREIGN KEY (NOMENCLATURA) REFERENCES ADMINFREE.NOMENCLATURAS(ID_NOMENCLATURA),');
