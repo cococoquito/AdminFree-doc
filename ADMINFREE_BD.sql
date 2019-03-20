@@ -189,6 +189,18 @@ DELIMITER //
 		PREPARE pre_tbl_docs FROM @tbl_docs;
 		EXECUTE pre_tbl_docs;
 
+		/*creacion de la tabla consecutivos transferencias*/
+		SET @tbl_trans = CONCAT('CREATE TABLE IF NOT EXISTS ', CONCAT('CONSECUTIVOS_TRANS_',V_ID_CLIENTE) ,'(');
+		SET @tbl_trans = CONCAT(@tbl_trans,'ID_TRANS BIGINT NOT NULL AUTO_INCREMENT,');
+		SET @tbl_trans = CONCAT(@tbl_trans,'ID_CONSECUTIVO BIGINT NOT NULL,');
+		SET @tbl_trans = CONCAT(@tbl_trans,'USUARIO INTEGER NOT NULL,');
+		SET @tbl_trans = CONCAT(@tbl_trans,'FECHA_TRANSFERIDO DATE NOT NULL,');
+		SET @tbl_trans = CONCAT(@tbl_trans,'PRIMARY KEY (ID_TRANS),');
+		SET @tbl_trans = CONCAT(@tbl_trans,'FOREIGN KEY (ID_CONSECUTIVO) REFERENCES ADMINFREE.', CONCAT('CONSECUTIVOS_',V_ID_CLIENTE,'(ID_CONSECUTIVO),'));
+		SET @tbl_trans = CONCAT(@tbl_trans,'FOREIGN KEY (USUARIO) REFERENCES ADMINFREE.USUARIOS(ID_USUARIO))');
+		PREPARE pre_tbl_trans FROM @tbl_trans;
+		EXECUTE pre_tbl_trans;
+
 		/*Fin de transaccion */
 		COMMIT;
 
