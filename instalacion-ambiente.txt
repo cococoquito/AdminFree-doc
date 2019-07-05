@@ -95,7 +95,7 @@ Y SEGUIR LAS INDICACIONES QUE DICE EN LA CONSOLA
 	b) Credenciales de GIT-HUB
 		https://github.com/
 		cococoquito
-		Shapecrazy$123
+		chichona1234
 		
 	c) si sale "Please tell me who you are" Run
 		git config --global user.email "you@example.com"
@@ -190,4 +190,7 @@ Y SEGUIR LAS INDICACIONES QUE DICE EN LA CONSOLA
 13) INSTALACION DE ANGULAR CLI
 			sudo npm install -g @angular/cli
 			ng -v
+			
+14) PARA INSTALAR LAS DEPENDENCIAS EN VISUAL ESTUDIO SE DEBE EJECUTAR EL VISUAL CODE EL SIGUIENTE CODIGO
+		sudo npm i
 		
